@@ -1,3 +1,9 @@
+.header {
+    position: relative;
+    background-color: #1C1C21;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
 .block__center {
     display: flex;
     justify-content: space-between;
@@ -23,4 +29,23 @@
 }
 .profileicon {
     composes: listicon;
+}
+.navbar {
+    composes: block__center;
+}
+.navbar a {
+    padding: 16px 20px;
+    border-radius: 50%;
+}
+.navbar a:last-of-type {
+    margin-left: 8px;
+}
+.header > div {
+    position: relative;
+}
+.logo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -145px;
 }

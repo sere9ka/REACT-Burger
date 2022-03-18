@@ -13,15 +13,15 @@ const ConstructBurger = (props) => {
 const GetListIcon = (props) => {
     return (
         <a href="/" className={headerStyles.listicon}>
-            <ListIcon type='secondary'></ListIcon>
+            <ListIcon type='secondary'></ListIcon>  
             <span>Лента заказов</span>
         </a>
     )
 }
 const GetProfileIcon = (props) => {
     return (
-        <a href="/" className={headerStyles.profileicon}>
-            <ProfileIcon type='secondary'></ProfileIcon>
+        <a href="/" className={`${headerStyles.profileicon}`}>
+            <ProfileIcon type='secondary'></ProfileIcon>  
             <span>Личный кабинет</span>
         </a>
     )
@@ -31,9 +31,13 @@ const Header = (props) => {
         return (
             <header className={headerStyles.header}>
                 <div className={headerStyles.container}>
-                    <ConstructBurger />
-                    <GetListIcon />
-                    <Logo></Logo>
+                    <nav className={headerStyles.navbar}>
+                        <ConstructBurger />
+                        <GetListIcon />                        
+                    </nav>
+                    <a href="/" className={headerStyles.logo}>
+                        <Logo />
+                    </a>
                     <GetProfileIcon />
                 </div>
             </header>
