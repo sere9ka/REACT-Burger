@@ -1,8 +1,8 @@
 .header {
     position: relative;
     background-color: #1C1C21;
-    padding-top: 16px;
-    padding-bottom: 16px;
+    /* padding-top: 16px;
+    padding-bottom: 16px; */
 }
 .block__center {
     display: flex;
@@ -20,9 +20,6 @@
     text-decoration: none;
     color: #F2F2F3;
 }
-.constructorlink span {
-    margin-left: 8px;
-}
 .listicon {
     composes: constructorlink;
     color: #8585AD;
@@ -33,12 +30,8 @@
 .navbar {
     composes: block__center;
 }
-.navbar a {
-    padding: 16px 20px;
-    border-radius: 50%;
-}
-.navbar a:last-of-type {
-    margin-left: 8px;
+.header a {
+    border-radius: 29px;
 }
 .header > div {
     position: relative;

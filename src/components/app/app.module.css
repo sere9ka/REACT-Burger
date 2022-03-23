@@ -1,0 +1,11 @@
+.block__center {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.container {
+    composes: block__center;
+    max-width: 1240px;
+    width: 100%;
+    margin: auto;
+}
