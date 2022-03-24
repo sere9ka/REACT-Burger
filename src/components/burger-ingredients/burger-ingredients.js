@@ -18,13 +18,11 @@ const Ingredient = ({ingredient}) => {
 }
 
 const GetIngredient = ({ingredients}) => {
-    console.log(ingredients)
-
-    const [current, setCurrent] = React.useState('one')
+    const [current, setCurrent] = React.useState('Булки')
     return (
         <>
             <div style={{ display: 'flex' }}>
-                <Tab value="Булки" to="bun" active={current === 'Булки'} onClick={setCurrent}>
+                <Tab value="Булки"  to="bun" active={current === 'Булки'} onClick={setCurrent}>
                     Булки
                 </Tab>
                 <Tab value="Соусы" to="main" active={current === 'Соусы'} onClick={setCurrent}>
@@ -37,19 +35,19 @@ const GetIngredient = ({ingredients}) => {
             <div className={`${ingredientStyles.listIngredients} mt-10`}>
                 <h3 className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Булки</h3>
                     { ingredients.filter(item => item.type === 'bun').map(ingredient => (
-                        <div className={`${ingredientStyles.card} mb-10`} id="bun" key={ingredient._id}>
+                        <div className={`${ingredientStyles.card} mb-10 mr-2`} id="bun" key={ingredient._id}>
                             <Ingredient ingredient={ingredient} />
                         </div>
                     ))}
                 <h3 className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Соусы</h3>
                     { ingredients.filter(item => item.type === 'sauce').map(ingredient => (
-                        <div className={`${ingredientStyles.card} mb-10`} id="bun" key={ingredient._id}>
+                        <div className={`${ingredientStyles.card} mb-10 mr-2`} id="bun" key={ingredient._id}>
                             <Ingredient ingredient={ingredient} />
                         </div>
                     ))}
                 <h3 className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Наполнители</h3>
                     { ingredients.filter(item => item.type === 'main').map(ingredient => (
-                        <div className={`${ingredientStyles.card} mb-10`} id="bun" key={ingredient._id}>
+                        <div className={`${ingredientStyles.card} mb-10 mr-2`} id="bun" key={ingredient._id}>
                             <Ingredient ingredient={ingredient} />
                         </div>
                     ))}

@@ -2,3 +2,41 @@
     max-width: 600px;
     width: 100%;
 }
+.burger {
+    max-height: 656px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+.burger::-webkit-scrollbar {
+    width: 8px;
+}
+ 
+.burger::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+
+}
+ 
+.burger::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+.card {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.card > div {
+    width: 100%;
+}
+.finalyPrice {
+    display: flex;
+    align-items: center;
+    
+}
+.summaryForm {
+    display: flex;
+    justify-content: flex-end;
+}

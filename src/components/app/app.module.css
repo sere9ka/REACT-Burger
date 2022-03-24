@@ -5,6 +5,7 @@
 }
 .container {
     composes: block__center;
+    align-items: flex-start;
     max-width: 1240px;
     width: 100%;
     margin: auto;

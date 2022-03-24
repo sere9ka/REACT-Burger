@@ -14,7 +14,7 @@ class App extends React.Component {
     };
   }
   getData() {
-      fetch('../utils/data.json')
+      fetch('../utils/data.js')
         .then(response => response.json())
         .then(data => {         
           this.setState({ ingredients: data })
