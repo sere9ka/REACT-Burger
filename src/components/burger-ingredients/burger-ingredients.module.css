@@ -2,3 +2,49 @@
     max-width: 600px;
     width: 100%;
 }
+.menuTitle {
+    font-weight: 700;
+    font-size: 24px;
+    width: 100%; 
+}
+.card {
+    position: relative;
+    max-width: 272px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.listIngredients {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.cardDesc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.cardTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.cardName {
+    text-align: center;
+    line-height: 24px;
+}
+.cardImg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.img {
+    height: 100%;
+}
+.counter {
+    position: absolute;
+    top: 0;
+    right: 16px;
+}
