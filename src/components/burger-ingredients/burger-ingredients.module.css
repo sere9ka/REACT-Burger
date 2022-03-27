@@ -7,6 +7,9 @@
     font-size: 24px;
     width: 100%; 
 }
+.flexbox {
+    display: flex;
+}
 .card {
     position: relative;
     max-width: 272px;

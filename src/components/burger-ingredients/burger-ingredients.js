@@ -43,7 +43,7 @@ const ListIngredient = ({ingredients}) => {
     const [current, setCurrent] = React.useState('Булки')
     return (
         <>
-            <div style={{ display: 'flex' }}>
+            <div className={`${ingredientStyles.flexbox}`}>
                 <Tab value="Булки"  to="bun" active={current === 'Булки'} onClick={setCurrent}>
                     Булки
                 </Tab>
