@@ -1,3 +1,9 @@
+.header {
+    position: relative;
+    background-color: #1C1C21;
+    /* padding-top: 16px;
+    padding-bottom: 16px; */
+}
 .block__center {
     display: flex;
     justify-content: space-between;
@@ -14,13 +20,25 @@
     text-decoration: none;
     color: #F2F2F3;
 }
-.constructorlink span {
-    margin-left: 8px;
-}
 .listicon {
     composes: constructorlink;
     color: #8585AD;
 }
 .profileicon {
     composes: listicon;
+}
+.navbar {
+    composes: block__center;
+}
+.header a {
+    border-radius: 29px;
+}
+.header > div {
+    position: relative;
+}
+.logo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -145px;
 }
