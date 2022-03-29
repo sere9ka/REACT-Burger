@@ -16,10 +16,7 @@ const Summary = () => {
         </div>
     )
 }
-const bunPropTypes = PropTypes.shape({
-    bun: PropTypes.object
-})
-const Bun = ({bun, type = ""}) => {
+const Bun = ({bun, type}) => {
     return (
         <div className={`${constructorStyles.card} mt-2 mb-2 mr-2`} id={`${(type === 'top') ? 'bunTop' : 'bunBottom'}`}>
             <ConstructorElement className={`${constructorStyles.card}`}
@@ -34,14 +31,10 @@ const Bun = ({bun, type = ""}) => {
 }
 
 Bun.propTypes = {
-    bun: bunPropTypes.isRequired
+    type: PropTypes.string.isRequired,
+    bun: PropTypes.object.isRequired
+    
 }
-//проверка на массив(обязательно должен быть)
-const ingredientsPropTypes = PropTypes.shape({
-    ingredients: PropTypes.array.isRequired
-})
-
-
 //вывод ингредиентов
 const Burger = ({ingredients}) => {
     let bun = {}
@@ -77,7 +70,7 @@ const Burger = ({ingredients}) => {
     )
 }
 Burger.propTypes = {
-    props: ingredientsPropTypes,
+    ingredients: PropTypes.array.isRequired,
 }
 
 const BurgerConstructor = (props) => {
@@ -89,7 +82,7 @@ const BurgerConstructor = (props) => {
     )
 }
 BurgerConstructor.propTypes = {
-    props: ingredientsPropTypes,
+    ingredients: PropTypes.array.isRequired
 }
 
 

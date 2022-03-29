@@ -3,20 +3,6 @@ import PropTypes from 'prop-types';
 import ingredientStyles from './burger-ingredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 
-const ingredientPropTypes = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-})
-
 const Ingredient = ({ingredient}) => {
     return (
         <>
@@ -32,12 +18,8 @@ const Ingredient = ({ingredient}) => {
     )
 }
 Ingredient.propTypes = {
-    ingredient: ingredientPropTypes.isRequired,
+    ingredient: PropTypes.object.isRequired,
 }
-
-const ingredientsPropTypes = PropTypes.shape({
-    ingredients: PropTypes.array.isRequired
-})
 
 const ListIngredient = ({ingredients}) => {
     const [current, setCurrent] = React.useState('Булки')
@@ -79,7 +61,7 @@ const ListIngredient = ({ingredients}) => {
 }
 
 ListIngredient.propTypes = {
-    props: ingredientsPropTypes,
+    ingredients: PropTypes.array,
 }
 
 const BurgerIngredients = (props) => {
@@ -92,7 +74,7 @@ const BurgerIngredients = (props) => {
     )
 }
 BurgerIngredients.propTypes = {
-    props: ingredientsPropTypes,
+    ingredients: PropTypes.array.isRequired
 }
 
 
