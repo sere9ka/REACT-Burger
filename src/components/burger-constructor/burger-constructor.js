@@ -4,17 +4,21 @@ import constructorStyles from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 //вывод суммы стоимости ингредиентов
-const Summary = () => {
+const Summary = (props) => {
     return (
-        <div className={`${constructorStyles.summaryForm} mt-10`}>
+        <div className={`${constructorStyles.summaryForm} mt-10`} id='summary_burger'>
             <p className={`${constructorStyles.finalyPrice}`}><span className={`mr-2 text text_type_digits-medium`}>610</span> <CurrencyIcon /></p>
             <div className='ml-10'>
-                <Button type="primary" size="large">
+                <Button onClick={props.onClick} type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>
         </div>
     )
+}
+Summary.propTypes = {
+    onClick: PropTypes.func.isRequired
+    
 }
 const Bun = ({bun, type}) => {
     return (
@@ -36,9 +40,9 @@ Bun.propTypes = {
     
 }
 //вывод ингредиентов
-const Burger = ({ingredients}) => {
+const Burger =  (props) => {
     let bun = {}
-    ingredients.forEach((ingr, i) => {
+    props.ingredients.forEach((ingr, i) => {
         if (i < 1) {
             bun = ingr
         }
@@ -49,7 +53,7 @@ const Burger = ({ingredients}) => {
             <div className={`${constructorStyles.burger}`} id="constructor_ingredients">
                 <Bun bun={bun} type={'top'} />
                 <div className={`${constructorStyles.ingredientsBurger}`}>
-                    { ingredients.filter(item => item.type !== 'bun').map((ingredient) => (
+                    { props.ingredients.filter(item => item.type !== 'bun').map((ingredient) => (
                         <div className={`${constructorStyles.cardIngr} mt-2 mb-2`} key={ingredient._id}>
                             <DragIcon />
                             <ConstructorElement 
@@ -65,24 +69,26 @@ const Burger = ({ingredients}) => {
                 <Bun bun={bun} type={'bottom'} />
             </div>
             
-        <Summary />
+        <Summary onClick={props.onClick} />
         </>
     )
 }
 Burger.propTypes = {
     ingredients: PropTypes.array.isRequired,
+    onClick: PropTypes.func.isRequired
 }
 
 const BurgerConstructor = (props) => {
     const ingredients = props.ingredients
     return (
         <section className={`${constructorStyles.section} pt-25`}>
-            <Burger ingredients={ingredients} />
+            <Burger onClick={props.onClick} ingredients={ingredients} />
         </section>
     )
 }
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.array.isRequired
+    ingredients: PropTypes.array.isRequired,
+    onClick: PropTypes.func.isRequired
 }
 
 
