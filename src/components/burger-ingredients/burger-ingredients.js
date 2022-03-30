@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import ingredientStyles from './burger-ingredients.module.css'
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -16,12 +17,15 @@ const Ingredient = ({ingredient}) => {
         </>
     )
 }
+Ingredient.propTypes = {
+    ingredient: PropTypes.object.isRequired,
+}
 
-const GetIngredient = ({ingredients}) => {
+const ListIngredient = ({ingredients}) => {
     const [current, setCurrent] = React.useState('Булки')
     return (
         <>
-            <div style={{ display: 'flex' }}>
+            <div className={`${ingredientStyles.flexbox}`}>
                 <Tab value="Булки"  to="bun" active={current === 'Булки'} onClick={setCurrent}>
                     Булки
                 </Tab>
@@ -56,14 +60,22 @@ const GetIngredient = ({ingredients}) => {
    )
 }
 
+ListIngredient.propTypes = {
+    ingredients: PropTypes.array,
+}
+
 const BurgerIngredients = (props) => {
     const ingredients = props.ingredients
     return (
        <section className={ingredientStyles.section}>
            <h2 className={`text text_type_main-large mt-10 mb-5`}>Соберите бургер</h2>
-            <GetIngredient ingredients ={ingredients} />
+            <ListIngredient ingredients ={ingredients} />
        </section>
     )
 }
+BurgerIngredients.propTypes = {
+    ingredients: PropTypes.array.isRequired
+}
+
 
 export default BurgerIngredients

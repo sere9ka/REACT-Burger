@@ -8,28 +8,47 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+.ingredientsBurger {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     overflow-y: auto;
     scrollbar-width: thin;
 }
-.burger::-webkit-scrollbar {
+.ingredientsBurger::-webkit-scrollbar {
     width: 8px;
 }
  
-.burger::-webkit-scrollbar-track {
+.ingredientsBurger::-webkit-scrollbar-track {
     background-color: #2F2F37;
 
 }
  
-.burger::-webkit-scrollbar-thumb {
+.ingredientsBurger::-webkit-scrollbar-thumb {
     background-color: #8585AD;
 }
 .card {
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .card > div {
+    margin-left: 32px;
+}
+.cardIngr {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cardIngr > div {
+    width: 100%;
+    margin-left: 8px;
+    cursor: grabbing;
 }
 .finalyPrice {
     display: flex;
