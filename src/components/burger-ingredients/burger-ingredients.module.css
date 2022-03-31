@@ -9,6 +9,10 @@
 }
 .flexbox {
     display: flex;
+    justify-content: space-between;
+}
+.flexbox > div {
+    width: 100%;
 }
 .card {
     position: relative;

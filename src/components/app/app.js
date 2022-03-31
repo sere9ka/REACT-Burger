@@ -12,26 +12,34 @@ const App = () => {
   const [ingredient, setIngredient] = React.useState({})
   const [dnone, setDnone] = React.useState(false)
   const [targetModal, setTargetModal] =  React.useState('')
-  // const orderRef = React.useRef(null)
-  // const overlayRef = React.useRef(null)
-  // const ingredientRef = React.useRef(null)
-
-  const handleModal = (e) => {
+  const modalClose = () => {
+    setDnone(false)
+}
+  const display = () => {
     setDnone(!dnone)
-    if (e.target.closest('#summary_burger')) {
-      setTargetModal('OrderDetails')
-    }  else if (e.target.closest('#listIngredients')) {
-      setTargetModal('IngredientDetails')
-      const name = e.currentTarget.querySelector('.cardName').textContent
-      ingredients.filter(item => item.name === name).map(ingredient => (
-        setIngredient(ingredient)
-      ))
-    } 
+    console.log(1);
+  }
+  const handleModalOrder = (e) => {
+    setTargetModal('OrderDetails')
+    display()
+  }
+  const handleModalDetails = (e) => {
+    setTargetModal('IngredientDetails')
+    const name = e.currentTarget.querySelector('.cardName').textContent
+    ingredients.filter(item => item.name === name).map(ingredient => (
+      setIngredient(ingredient)
+    ))
+    display()
   }
 
   const getData = () => {
     fetch(linkData)
-      .then(response => response.json())
+      .then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
       .then(data => {
         setIngredients(data.data)
       })
@@ -47,21 +55,23 @@ const App = () => {
       <main>
         <div className={appStyle.container}>
           <BurgerIngredients 
-          onClick={handleModal} 
+          onClick={handleModalDetails} 
           // ref={ingredientRef} 
           ingredients={ingredients} />
           <BurgerConstructor 
-          onClick={handleModal} 
+          onClick={handleModalOrder} 
           // ref={orderRef} 
           ingredients={ingredients} />
         </div>
       </main>
       <Modal 
         // ref={overlayRef}
-        onClick={handleModal}
+        onClick={display}
         dnone={dnone}
+        setDnone={setDnone}
         targetModal={targetModal}
         ingredientModal={ingredient}
+        modalClose={modalClose}
       />
     </>
 
