@@ -27,10 +27,10 @@ const App = () => {
     setTargetModal('OrderDetails')
     display()
   }
-  const handleModalDetails = (e) => {
+  const handleModalDetails = (ingredientList) => {
     setTargetModal('IngredientDetails')
-    const name = e.currentTarget.querySelector('.cardName').textContent
-    ingredients.filter(item => item.name === name).map(ingredient => (
+    // const name = e.currentTarget.querySelector('.cardName').textContent
+    ingredients.filter(item => item.name === ingredientList.name).map(ingredient => (
       setIngredient(ingredient)
     ))
     display()
