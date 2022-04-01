@@ -1,7 +1,6 @@
 import React from 'react';
 import style from '../modal.module.css'
 import PropTypes from 'prop-types';
-import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
 const IngredientDetails = (props) => {
     const ingredient = props.ingredientModal
@@ -10,7 +9,6 @@ const IngredientDetails = (props) => {
             <div className={`${style.modalIngredient} ${style.modal} pl-10 pr-10 pt-10 pb-15`}>
                 <div className={`${style.headerModal}`}>
                     <h2 className={`${style.modalIngredientTitle} text text_type_main-large`}>Детали ингредиента</h2>
-                    <CloseIcon onClick={props.onClick} type="primary" />
                 </div>
                 <div className={`${style.modalIngredientImg}`}>
                     <img src={ingredient.image_large} alt="" />

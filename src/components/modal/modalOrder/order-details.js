@@ -13,7 +13,6 @@ const OrderDetails = (props) => {
             
             <div className={`${style.headerModal}`}>
                 <h2 className={`${style.modalOrderTitle} text text_type_digits-large`}>034536</h2>
-                <CloseIcon onClick={props.onClick} type="primary" />
             </div>
             <span className={`${style.modalOrderSubtitle} text text_type_main-medium mt-8 mb-15`}>идентификатор заказа</span>
             <div className={`${style.modalOrderImg} mb-15`}>

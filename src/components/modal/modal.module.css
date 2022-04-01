@@ -15,6 +15,13 @@
 .section {
     display: block;
 }
+.closeButtonBlock {
+    cursor: pointer;
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    z-index: 1;
+}
 .modalWindow {
     max-width: 720px;
     width: 100%;

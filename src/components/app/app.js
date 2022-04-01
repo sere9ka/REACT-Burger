@@ -1,5 +1,9 @@
 import React from 'react';
 import appStyle from './app.module.css'
+import style from '../modal/modal.module.css'
+import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+
+
 import AppHeader from '../header/header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
@@ -73,13 +77,16 @@ const App = () => {
         ingredientModal={ingredient}
         modalClose={modalClose}
       >
+        
         <ModalWindowConstruct onClick={display}
         dnone={dnone}
         setDnone={setDnone}
         targetModal={targetModal}
         ingredientModal={ingredient}
         modalClose={modalClose}>
-          
+          <div className={style.closeButtonBlock}>
+              <CloseIcon onClick={display} type="primary" />
+          </div>
         </ModalWindowConstruct>
       </Modal>
     </>
