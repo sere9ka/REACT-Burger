@@ -4,6 +4,7 @@ import AppHeader from '../header/header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
 import Modal from '../modal/modal';
+import ModalWindowConstruct from '../modal/modal-construct/modal-construct';
 
 const linkData = 'https://norma.nomoreparties.space/api/ingredients'
 
@@ -17,7 +18,6 @@ const App = () => {
 }
   const display = () => {
     setDnone(!dnone)
-    console.log(1);
   }
   const handleModalOrder = (e) => {
     setTargetModal('OrderDetails')
@@ -72,7 +72,16 @@ const App = () => {
         targetModal={targetModal}
         ingredientModal={ingredient}
         modalClose={modalClose}
-      />
+      >
+        <ModalWindowConstruct onClick={display}
+        dnone={dnone}
+        setDnone={setDnone}
+        targetModal={targetModal}
+        ingredientModal={ingredient}
+        modalClose={modalClose}>
+          
+        </ModalWindowConstruct>
+      </Modal>
     </>
 
   );

@@ -3,7 +3,7 @@ import style from './modal.module.css'
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
-import ModalWindowConstruct from './modal-construct/modal-construct'
+// import ModalWindowConstruct from './modal-construct/modal-construct'
 import ModalOverlay from './modal-overlay/modal-overlay'
 
 const modalRoot = document.getElementById("react-modals");
@@ -18,13 +18,10 @@ const Modal = (props) => {
         document.addEventListener('keydown', closeByEscape)
         
         return () => document.removeEventListener('keydown', closeByEscape)
-    }, []);
+    }, [props]);
     return ReactDOM.createPortal(
         <section className={`${props.dnone ? style.section :  style.dnone} text`}>
-            <ModalWindowConstruct 
-            onClick={props.onClick} 
-            targetModal={props.targetModal} 
-            ingredientModal={props.ingredientModal} />
+            {props.children}
             <ModalOverlay onClick={props.onClick} />
         </section>,
         modalRoot
