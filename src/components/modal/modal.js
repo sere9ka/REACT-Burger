@@ -2,6 +2,8 @@ import React from 'react';
 import style from './modal.module.css'
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+
 
 
 // import ModalWindowConstruct from './modal-construct/modal-construct'
@@ -21,9 +23,14 @@ const Modal = (props) => {
         return () => document.removeEventListener('keydown', closeByEscape)
     }, [props]);
     return ReactDOM.createPortal(
-        <section className={`${props.dnone ? style.section :  style.dnone} ${style.sectionModal} text`}>
-            {props.children}
+        <section className={`${props.dnone ? style.section :  style.dnone} text`}>
             <ModalOverlay onClick={props.onClick} />
+            <div className={`${style.modalWindow}`}>
+                <div className={style.closeButtonBlock}>
+                    <CloseIcon onClick={props.onClick} type="primary" />
+                </div>
+                {props.children}
+            </div>
             
         </section>,
         modalRoot

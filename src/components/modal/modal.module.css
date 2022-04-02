@@ -3,6 +3,7 @@
 }
 .dnone {
     display: none;
+    /* overflow: hidden; */
 }
 .overlay {
     position: fixed;

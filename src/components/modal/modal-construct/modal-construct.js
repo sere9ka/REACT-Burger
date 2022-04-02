@@ -11,18 +11,11 @@ import PropTypes from 'prop-types';
 const ModalWindowConstruct = (props) => {
     if (props.targetModal === 'OrderDetails') {
         return (
-            
-            <div className={`${style.modalWindow}`}>
-                {props.children}
-                <OrderDetails onClick={props.onClick} />
-            </div>
+            <OrderDetails onClick={props.onClick} />
         )
     } else if (props.targetModal === 'IngredientDetails') {
         return (
-            <div className={`${style.modalWindow}`}>
-                {props.children}
                 <IngredientDetails onClick={props.onClick} ingredientModal={props.ingredientModal}/>
-            </div>
         )
     } else {
         return(

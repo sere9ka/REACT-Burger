@@ -27,12 +27,9 @@ const App = () => {
     setTargetModal('OrderDetails')
     display()
   }
-  const handleModalDetails = (ingredientList) => {
+  const handleModalDetails = (ingredient) => {
     setTargetModal('IngredientDetails')
-    // const name = e.currentTarget.querySelector('.cardName').textContent
-    ingredients.filter(item => item.name === ingredientList.name).map(ingredient => (
-      setIngredient(ingredient)
-    ))
+    setIngredient(ingredient)
     display()
   }
 
@@ -77,17 +74,12 @@ const App = () => {
         ingredientModal={ingredient}
         modalClose={modalClose}
       >
-        
-        <ModalWindowConstruct onClick={display}
-        dnone={dnone}
-        setDnone={setDnone}
-        targetModal={targetModal}
-        ingredientModal={ingredient}
-        modalClose={modalClose}>
-          <div className={style.closeButtonBlock}>
-              <CloseIcon onClick={display} type="primary" />
-          </div>
-        </ModalWindowConstruct>
+          <ModalWindowConstruct onClick={display}
+            dnone={dnone}
+            setDnone={setDnone}
+            targetModal={targetModal}
+            ingredientModal={ingredient}
+            modalClose={modalClose} />
       </Modal>
     </>
 
