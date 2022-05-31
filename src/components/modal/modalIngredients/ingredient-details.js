@@ -1,9 +1,12 @@
-import React from 'react';
+import { useContext } from 'react';
 import style from '../modal.module.css'
 import PropTypes from 'prop-types';
+import { ingredientsContext } from '../../../Context/Context';
 
-const IngredientDetails = (props) => {
-    const ingredient = props.ingredientModal
+
+const IngredientDetails = () => {
+    const { ingredient } = useContext(ingredientsContext)
+
     if (typeof ingredient['name'] !== 'undefined') {
         return (
             <div className={`${style.modalIngredient} ${style.modal} pl-10 pr-10 pt-10 pb-15`}>
@@ -37,7 +40,6 @@ const IngredientDetails = (props) => {
     } else return ('')
 }
 IngredientDetails.propTypes = {
-    ingredientModal: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,
 }
 

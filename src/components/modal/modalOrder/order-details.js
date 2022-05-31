@@ -1,11 +1,6 @@
-import React from 'react';
 import style from '../modal.module.css'
-
 import PropTypes from 'prop-types';
-
 import orderImg from '../../../image/ok-order.svg'
-import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-
 
 const OrderDetails = (props) => {
     return (
