@@ -13,19 +13,18 @@ const modalRoot = document.getElementById("react-modals");
 
 const Modal = (props) => {
     const {
-        dnone,
-        modalClose
+        dnone
       } = useContext(IngredientsContext)
 
     React.useEffect(() => {
         const closeByEscape = (e) => {
           if (e.key === 'Escape') {
-            modalClose();
+            props.onClick();
           }
         }
         document.addEventListener('keydown', closeByEscape)
         return () => document.removeEventListener('keydown', closeByEscape)
-    }, [dnone, modalClose]);
+    }, [dnone, props.onClick]);
 
     return ReactDOM.createPortal(
         <section className={`${dnone ? style.section :  style.dnone} text`}>
