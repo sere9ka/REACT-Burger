@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import ingredientStyles from '../burger-ingredients/burger-ingredients.module.css'
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientsContext } from '../../Context/Context';
+import { TabContext } from '../../Context/TabContext';
 
 
 
@@ -24,6 +25,7 @@ const Ingredient = ({ingredient}) => {
 // }
 
 export const IngredientsWrap = (props) => {
+    const { tabBunRef, tabMainRef, tabSauceRef } = useContext(TabContext)
     const { ingredients } = useContext(IngredientsContext)
 
     const buns = ingredients.filter(item => item.type === 'bun')
@@ -32,21 +34,21 @@ export const IngredientsWrap = (props) => {
 
     return (
         <div className={`${ingredientStyles.listIngredients} mt-10`} id='listIngredients'>
-            <h3 className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Булки</h3>
+            <h3 ref={tabBunRef} className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Булки</h3>
             { buns.map(ingredient => (
                 <div data-key={ingredient._id} onClick={() => props.onClick(ingredient)} className={`${ingredientStyles.card} mb-10 mr-2`} key={ingredient._id}>
                     <Ingredient ingredient={ingredient} />
                 </div>
             ))}
 
-            <h3 className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Начинки</h3>
+            <h3 ref={tabMainRef} className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Начинки</h3>
             { mains.map(ingredient => (
                 <div data-key={ingredient._id} onClick={() => props.onClick(ingredient)} className={`${ingredientStyles.card} mb-10 mr-2`} key={ingredient._id}>
                     <Ingredient ingredient={ingredient} />
                 </div>
             ))}
 
-            <h3 className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Соусы</h3>
+            <h3 ref={tabSauceRef} className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Соусы</h3>
             { sauces.map(ingredient => (
                 <div data-key={ingredient._id} onClick={() => props.onClick(ingredient)} className={`${ingredientStyles.card} mb-10 mr-2`} key={ingredient._id}>
                     <Ingredient ingredient={ingredient} />
