@@ -10,10 +10,16 @@ import { useIngredients } from '../../Hooks/useIngredients';
 import { useIngredient } from '../../Hooks/useIngredient';
 import { useDNone } from '../../Hooks/useDnone';
 import { useTargetModal } from '../../Hooks/useTargetModal';
+import { useBurger } from '../../Hooks/useBurger';
+import { useCalc } from '../../Hooks/useCalc';
+import { useOrder } from '../../Hooks/useOrder';
 
 const linkData = 'https://norma.nomoreparties.space/api/ingredients'
 
 const App = () => {
+  const { burger, setBurger } = useBurger()
+  const { order, setOrder, sendOrder } = useOrder('https://norma.nomoreparties.space/api/orders')
+  const { sumBurger, setSumBurger } = useCalc()
   const {ingredients, setIngredients} = useIngredients()
   const {ingredient, setIngredient} = useIngredient()
   const {dnone, setDnone} = useDNone()
@@ -34,7 +40,7 @@ const App = () => {
     display()
   }
   const getData = () => {
-    fetch(linkData)
+    fetch(linkData, {mode: 'cors'})
       .then(res => {
         if (res.ok) {
             return res.json();
@@ -53,26 +59,32 @@ const App = () => {
   return (
     <ingredientsContext.Provider value={
       {
+        setSumBurger,
         setIngredients,
+        setBurger,
         setIngredient,
         setDnone,
         setTargetModal,
+        modalClose,
+        setOrder,
+        sendOrder,
+        sumBurger,        
         ingredients,
+        burger,
         ingredient,
         dnone,
         targetModal,
-        modalClose
+        order
       }
     }>
       <AppHeader />
       <main>
         <div className={appStyle.container}>
-          <BurgerIngredients 
-            onClick={handleModalDetails} 
-            ingredients={ingredients} />
-          <BurgerConstructor 
-            onClick={handleModalOrder} 
-            ingredients={ingredients} />
+        { ingredients.length > 0 ? <BurgerIngredients 
+            onClick={handleModalDetails} /> : <></> }
+         
+          { ingredients.length > 0 ? <BurgerConstructor 
+            onClick={handleModalOrder} /> : <></> }
         </div>
       </main>
       <Modal 

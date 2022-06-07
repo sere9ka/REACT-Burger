@@ -25,7 +25,7 @@ const Modal = (props) => {
         }
         document.addEventListener('keydown', closeByEscape)
         return () => document.removeEventListener('keydown', closeByEscape)
-    }, [dnone]);
+    }, [dnone, modalClose]);
 
     return ReactDOM.createPortal(
         <section className={`${dnone ? style.section :  style.dnone} text`}>
