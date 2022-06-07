@@ -3,7 +3,7 @@ import style from './modal.module.css'
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredientsContext } from '../../Context/Context';
+import { IngredientsContext } from '../../Context/Context';
 
 
 // import ModalWindowConstruct from './modal-construct/modal-construct'
@@ -15,7 +15,7 @@ const Modal = (props) => {
     const {
         dnone,
         modalClose
-      } = useContext(ingredientsContext)
+      } = useContext(IngredientsContext)
 
     React.useEffect(() => {
         const closeByEscape = (e) => {

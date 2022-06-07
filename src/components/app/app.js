@@ -5,7 +5,7 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
 import Modal from '../modal/modal';
 import ModalWindowConstruct from '../modal/modal-construct/modal-construct';
-import { ingredientsContext } from '../../Context/Context';
+import { IngredientsContext } from '../../Context/Context';
 import { useIngredients } from '../../Hooks/useIngredients';
 import { useIngredient } from '../../Hooks/useIngredient';
 import { useDNone } from '../../Hooks/useDnone';
@@ -47,7 +47,7 @@ const App = () => {
   })
 
   return (
-    <ingredientsContext.Provider value={
+    <IngredientsContext.Provider value={
       {
         setSumBurger,
         setIngredients,
@@ -82,7 +82,7 @@ const App = () => {
       >
           <ModalWindowConstruct onClick={display} />
       </Modal>
-    </ingredientsContext.Provider>
+    </IngredientsContext.Provider>
 
   );
 }

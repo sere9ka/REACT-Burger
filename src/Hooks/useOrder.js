@@ -19,7 +19,6 @@ export const useOrder = (url) => {
         })
         response
             .then(checkResponse)
-            .then(response => response.json())
             .then(data => setOrder({
                 ...order,
                 number: data.order.number,

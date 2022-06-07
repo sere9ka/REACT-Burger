@@ -2,12 +2,12 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types';
 import constructorStyles from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredientsContext } from '../../Context/Context';
+import { IngredientsContext } from '../../Context/Context';
 
 
 //вывод суммы стоимости ингредиентов
 const Summary = (props) => {
-    const { sendOrder, sumBurger } = useContext(ingredientsContext)
+    const { sendOrder, sumBurger } = useContext(IngredientsContext)
 
     return (
         <div className={`${constructorStyles.summaryForm} mt-10`} id='summary_burger'>
@@ -28,7 +28,7 @@ Summary.propTypes = {
     
 }
 const Bun = ({bun, type}) => {
-    const { burger } = useContext(ingredientsContext)
+    const { burger } = useContext(IngredientsContext)
     return (
         <div className={`${constructorStyles.card} mt-2 mb-2 mr-2`} id={`${(type === 'top') ? 'bunTop' : 'bunBottom'}`}>
             <ConstructorElement className={`${constructorStyles.card}`}
@@ -47,10 +47,10 @@ Bun.propTypes = {
 }
 //вывод ингредиентов
 const Burger =  (props) => {
-    const { order, setOrder, ingredients, burger, setBurger, setSumBurger, sumBurger } = useContext(ingredientsContext)
+    const { order, setOrder, ingredients, burger, setBurger, setSumBurger, sumBurger } = useContext(IngredientsContext)
 
     const getBurger = () => {     
-          
+
         ingredients.forEach((ingredient, i) => {
             if (ingredient.type === "bun" && i === 1) {
                 setBurger({

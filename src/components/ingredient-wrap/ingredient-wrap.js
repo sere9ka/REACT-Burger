@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import ingredientStyles from '../burger-ingredients/burger-ingredients.module.css'
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredientsContext } from '../../Context/Context';
+import { IngredientsContext } from '../../Context/Context';
 
 
 
@@ -24,7 +24,7 @@ const Ingredient = ({ingredient}) => {
 // }
 
 export const IngredientsWrap = (props) => {
-    const { ingredients } = useContext(ingredientsContext)
+    const { ingredients } = useContext(IngredientsContext)
 
     const buns = ingredients.filter(item => item.type === 'bun')
     const mains = ingredients.filter(item => item.type === 'main')
