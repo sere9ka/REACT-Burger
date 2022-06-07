@@ -14,13 +14,15 @@ import { useBurger } from '../../Hooks/useBurger';
 import { useCalc } from '../../Hooks/useCalc';
 import { useOrder } from '../../Hooks/useOrder';
 
-const linkData = 'https://norma.nomoreparties.space/api/ingredients'
+const baseUrl = 'https://norma.nomoreparties.space/api/'
+const urlData = 'ingredients'
+const urlOrder = 'orders'
 
 const App = () => {
   const { burger, setBurger } = useBurger()
-  const { order, setOrder, sendOrder } = useOrder('https://norma.nomoreparties.space/api/orders')
+  const { order, setOrder, sendOrder } = useOrder(`${baseUrl}${urlOrder}`)
   const { sumBurger, setSumBurger } = useCalc()
-  const {ingredients, setIngredients} = useIngredients()
+  const {ingredients, setIngredients, getData} = useIngredients()
   const {ingredient, setIngredient} = useIngredient()
   const {dnone, setDnone} = useDNone()
   const {targetModal, setTargetModal} = useTargetModal()
@@ -39,22 +41,10 @@ const App = () => {
     setIngredient(ingredient)
     display()
   }
-  const getData = () => {
-    fetch(linkData, {mode: 'cors'})
-      .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
-      .then(data => {
-        setIngredients(data.data)
-      })
-      .catch(e => console.log(`Что-то пошло не так. Ошибка: ${e}`))
-  }
+  
   React.useEffect(() => {
-    getData()
-  }, [])
+    getData(`${baseUrl}${urlData}`)
+  })
 
   return (
     <ingredientsContext.Provider value={

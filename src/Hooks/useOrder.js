@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { checkResponse } from "../Functions/checkResponse";
 
 export const useOrder = (url) => {
     const [order, setOrder] = useState({
@@ -17,16 +18,13 @@ export const useOrder = (url) => {
             })
         })
         response
+            .then(checkResponse)
             .then(response => response.json())
             .then(data => setOrder({
                 ...order,
                 number: data.order.number,
             }))
-        
-        console.log(order);
-        console.log(JSON.stringify({
-            ingredients: order.burgerIngredients
-        }));
+            .catch(err => console.error(err))
     }
 
     return { order, setOrder, sendOrder }

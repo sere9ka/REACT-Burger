@@ -47,14 +47,10 @@ Bun.propTypes = {
 }
 //вывод ингредиентов
 const Burger =  (props) => {
-    const { order, setOrder, ingredients, burger, setBurger, setSumBurger } = useContext(ingredientsContext)
+    const { order, setOrder, ingredients, burger, setBurger, setSumBurger, sumBurger } = useContext(ingredientsContext)
 
-    const getBurger = () => {
-        setBurger({
-            bun: undefined,
-            ingredients: [] 
-        })
-        
+    const getBurger = () => {     
+          
         ingredients.forEach((ingredient, i) => {
             if (ingredient.type === "bun" && i === 1) {
                 setBurger({
@@ -76,23 +72,27 @@ const Burger =  (props) => {
                 })
             }
         });
-        console.log(burger);
-        console.log(order);
     }
-    const calculating = () => {
-        let sum = 0;
+    const calculating = (burger) => {
         burger.ingredients.forEach(ingredient => {
-            setSumBurger(sum += ingredient.price)
+            setSumBurger(sumBurger + ingredient.price)
         })
     }
 
     React.useEffect(() => {
+        setBurger({
+            bun: undefined,
+            ingredients: null,
+        })
+        setOrder({
+            ingredients: [],
+        })
         getBurger();
     }, [])
 
     React.useEffect(() => {
-        calculating()
-    }, [burger, ingredients])
+        calculating(burger)
+    }, [burger, burger.ingredients])
 
     return (
         <> 
