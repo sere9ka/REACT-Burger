@@ -20,7 +20,7 @@ const Modal = (props) => {
     React.useEffect(() => {
         const closeByEscape = (e) => {
           if (e.key === 'Escape') {
-            modalClose()
+            props.onClick(false);
           }
         }
         document.addEventListener('keydown', closeByEscape)

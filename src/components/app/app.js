@@ -26,21 +26,21 @@ const App = () => {
   const {ingredient, setIngredient} = useIngredient()
   const {dnone, setDnone} = useDNone()
   const {targetModal, setTargetModal} = useTargetModal()
-  
+
   const modalClose = () => {
     setDnone(false)
 }
-  const display = () => {
-    setDnone(!dnone)
+  const display = (set) => {
+    set ? setDnone(true) : setDnone(false)   
   }
   const handleModalOrder = () => {
     setTargetModal('OrderDetails')
-    display()
+    display(true)
   }
   const handleModalDetails = (ingredient) => {
     setTargetModal('IngredientDetails')
     setIngredient(ingredient)
-    display()
+    display(true)
   }
   
   React.useEffect(() => {
@@ -79,7 +79,7 @@ const App = () => {
         </div>
       </main>
       <Modal 
-        onClick={display}
+        onClick={() => {display(false)}}
       >
           <ModalWindowConstruct onClick={display} />
       </Modal>
