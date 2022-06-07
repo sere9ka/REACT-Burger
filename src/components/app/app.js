@@ -26,6 +26,7 @@ const App = () => {
   const {ingredient, setIngredient} = useIngredient()
   const {dnone, setDnone} = useDNone()
   const {targetModal, setTargetModal} = useTargetModal()
+  
   const modalClose = () => {
     setDnone(false)
 }
@@ -44,7 +45,7 @@ const App = () => {
   
   React.useEffect(() => {
     getData(`${baseUrl}${urlData}`)
-  })
+  }, [])
 
   return (
     <IngredientsContext.Provider value={

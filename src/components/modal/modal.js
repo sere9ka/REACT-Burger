@@ -13,13 +13,14 @@ const modalRoot = document.getElementById("react-modals");
 
 const Modal = (props) => {
     const {
-        dnone
+        dnone,
+        modalClose
       } = useContext(IngredientsContext)
 
     React.useEffect(() => {
         const closeByEscape = (e) => {
           if (e.key === 'Escape') {
-            props.onClick();
+            modalClose()
           }
         }
         document.addEventListener('keydown', closeByEscape)
