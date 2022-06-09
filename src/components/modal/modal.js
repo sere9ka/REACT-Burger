@@ -3,7 +3,7 @@ import style from './modal.module.css'
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredientsContext } from '../../Context/Context';
+import { IngredientsContext } from '../../Context/Context';
 
 
 // import ModalWindowConstruct from './modal-construct/modal-construct'
@@ -13,19 +13,18 @@ const modalRoot = document.getElementById("react-modals");
 
 const Modal = (props) => {
     const {
-        dnone,
-        modalClose
-      } = useContext(ingredientsContext)
+        dnone
+      } = useContext(IngredientsContext)
 
     React.useEffect(() => {
         const closeByEscape = (e) => {
           if (e.key === 'Escape') {
-            modalClose();
+            props.onClick();
           }
         }
         document.addEventListener('keydown', closeByEscape)
         return () => document.removeEventListener('keydown', closeByEscape)
-    }, [dnone, modalClose]);
+    }, [dnone]);
 
     return ReactDOM.createPortal(
         <section className={`${dnone ? style.section :  style.dnone} text`}>

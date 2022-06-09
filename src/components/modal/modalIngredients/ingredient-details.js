@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import style from '../modal.module.css'
 import PropTypes from 'prop-types';
-import { ingredientsContext } from '../../../Context/Context';
+import { IngredientsContext } from '../../../Context/Context';
 
 
 const IngredientDetails = () => {
-    const { ingredient } = useContext(ingredientsContext)
+    const { ingredient } = useContext(IngredientsContext)
 
     if (typeof ingredient['name'] !== 'undefined') {
         return (

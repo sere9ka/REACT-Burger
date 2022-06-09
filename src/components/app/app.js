@@ -5,7 +5,7 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
 import Modal from '../modal/modal';
 import ModalWindowConstruct from '../modal/modal-construct/modal-construct';
-import { ingredientsContext } from '../../Context/Context';
+import { IngredientsContext } from '../../Context/Context';
 import { useIngredients } from '../../Hooks/useIngredients';
 import { useIngredient } from '../../Hooks/useIngredient';
 import { useDNone } from '../../Hooks/useDnone';
@@ -14,50 +14,41 @@ import { useBurger } from '../../Hooks/useBurger';
 import { useCalc } from '../../Hooks/useCalc';
 import { useOrder } from '../../Hooks/useOrder';
 
-const linkData = 'https://norma.nomoreparties.space/api/ingredients'
+const baseUrl = 'https://norma.nomoreparties.space/api/'
+const urlData = 'ingredients'
+const urlOrder = 'orders'
 
 const App = () => {
   const { burger, setBurger } = useBurger()
-  const { order, setOrder, sendOrder } = useOrder('https://norma.nomoreparties.space/api/orders')
+  const { order, setOrder, sendOrder } = useOrder(`${baseUrl}${urlOrder}`)
   const { sumBurger, setSumBurger } = useCalc()
-  const {ingredients, setIngredients} = useIngredients()
+  const {ingredients, setIngredients, getData} = useIngredients()
   const {ingredient, setIngredient} = useIngredient()
   const {dnone, setDnone} = useDNone()
   const {targetModal, setTargetModal} = useTargetModal()
+
   const modalClose = () => {
     setDnone(false)
 }
-  const display = () => {
-    setDnone(!dnone)
+  const display = (set) => {
+    set ? setDnone(true) : setDnone(false)   
   }
   const handleModalOrder = () => {
     setTargetModal('OrderDetails')
-    display()
+    display(true)
   }
   const handleModalDetails = (ingredient) => {
     setTargetModal('IngredientDetails')
     setIngredient(ingredient)
-    display()
+    display(true)
   }
-  const getData = () => {
-    fetch(linkData, {mode: 'cors'})
-      .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
-      .then(data => {
-        setIngredients(data.data)
-      })
-      .catch(e => console.log(`Что-то пошло не так. Ошибка: ${e}`))
-  }
+  
   React.useEffect(() => {
-    getData()
+    getData(`${baseUrl}${urlData}`)
   }, [])
 
   return (
-    <ingredientsContext.Provider value={
+    <IngredientsContext.Provider value={
       {
         setSumBurger,
         setIngredients,
@@ -88,11 +79,11 @@ const App = () => {
         </div>
       </main>
       <Modal 
-        onClick={display}
+        onClick={() => {display(false)}}
       >
           <ModalWindowConstruct onClick={display} />
       </Modal>
-    </ingredientsContext.Provider>
+    </IngredientsContext.Provider>
 
   );
 }

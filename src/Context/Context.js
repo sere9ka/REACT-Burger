@@ -1,3 +1,3 @@
 import React from "react";
 
-export const ingredientsContext = React.createContext()
+export const IngredientsContext = React.createContext()

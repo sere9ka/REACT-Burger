@@ -2,10 +2,10 @@ import style from '../modal.module.css'
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import orderImg from '../../../image/ok-order.svg'
-import { ingredientsContext } from '../../../Context/Context';
+import { IngredientsContext } from '../../../Context/Context';
 
 const OrderDetails = () => {
-    const { order } = useContext(ingredientsContext)
+    const { order } = useContext(IngredientsContext)
 
     return (
         <div className={`${style.modalOrder} ${style.modal}`}>
