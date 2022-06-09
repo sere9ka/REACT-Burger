@@ -1,7 +1,5 @@
 import React from 'react';
 import appStyle from './app.module.css'
-import style from '../modal/modal.module.css'
-import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
 
 import AppHeader from '../header/header'
