@@ -1,21 +1,20 @@
-import React from 'react';
+import { useContext } from 'react';
 import style from '../modal.module.css'
-import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-
-
+import { IngredientsContext } from '../../../Context/Context';
 import IngredientDetails from '../modalIngredients/ingredient-details'
 import OrderDetails from '../modalOrder/order-details'
-
 import PropTypes from 'prop-types';
 
 const ModalWindowConstruct = (props) => {
-    if (props.targetModal === 'OrderDetails') {
+    const { targetModal} = useContext(IngredientsContext)
+    
+    if (targetModal === 'OrderDetails') {
         return (
             <OrderDetails onClick={props.onClick} />
         )
-    } else if (props.targetModal === 'IngredientDetails') {
+    } else if (targetModal === 'IngredientDetails') {
         return (
-                <IngredientDetails onClick={props.onClick} ingredientModal={props.ingredientModal}/>
+                <IngredientDetails onClick={props.onClick} />
         )
     } else {
         return(
@@ -26,9 +25,7 @@ const ModalWindowConstruct = (props) => {
     }
 }
 ModalWindowConstruct.propTypes = {
-    ingredientModal: PropTypes.object,
     onClick: PropTypes.func.isRequired,
-    targetModal: PropTypes.string
 }
 
 export default ModalWindowConstruct

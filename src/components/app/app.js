@@ -1,87 +1,89 @@
 import React from 'react';
 import appStyle from './app.module.css'
-import style from '../modal/modal.module.css'
-import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-
-
 import AppHeader from '../header/header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
 import Modal from '../modal/modal';
 import ModalWindowConstruct from '../modal/modal-construct/modal-construct';
+import { IngredientsContext } from '../../Context/Context';
+import { useIngredients } from '../../Hooks/useIngredients';
+import { useIngredient } from '../../Hooks/useIngredient';
+import { useDNone } from '../../Hooks/useDnone';
+import { useTargetModal } from '../../Hooks/useTargetModal';
+import { useBurger } from '../../Hooks/useBurger';
+import { useCalc } from '../../Hooks/useCalc';
+import { useOrder } from '../../Hooks/useOrder';
 
-const linkData = 'https://norma.nomoreparties.space/api/ingredients'
+const baseUrl = 'https://norma.nomoreparties.space/api/'
+const urlData = 'ingredients'
+const urlOrder = 'orders'
 
 const App = () => {
-  const [ingredients, setIngredients] = React.useState([])
-  const [ingredient, setIngredient] = React.useState({})
-  const [dnone, setDnone] = React.useState(false)
-  const [targetModal, setTargetModal] =  React.useState('')
+  const { burger, setBurger } = useBurger()
+  const { order, setOrder, sendOrder } = useOrder(`${baseUrl}${urlOrder}`)
+  const { sumBurger, setSumBurger } = useCalc()
+  const {ingredients, setIngredients, getData} = useIngredients()
+  const {ingredient, setIngredient} = useIngredient()
+  const {dnone, setDnone} = useDNone()
+  const {targetModal, setTargetModal} = useTargetModal()
+
   const modalClose = () => {
     setDnone(false)
 }
-  const display = () => {
-    setDnone(!dnone)
+  const display = (set) => {
+    set ? setDnone(true) : setDnone(false)   
   }
-  const handleModalOrder = (e) => {
+  const handleModalOrder = () => {
     setTargetModal('OrderDetails')
-    display()
+    display(true)
   }
   const handleModalDetails = (ingredient) => {
     setTargetModal('IngredientDetails')
     setIngredient(ingredient)
-    display()
+    display(true)
   }
-
-  const getData = () => {
-    fetch(linkData)
-      .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
-      .then(data => {
-        setIngredients(data.data)
-      })
-      .catch(e => console.log(`Что-то пошло не так. Ошибка: ${e}`))
-  }
+  
   React.useEffect(() => {
-    getData()
+    getData(`${baseUrl}${urlData}`)
   }, [])
 
   return (
-    <>
+    <IngredientsContext.Provider value={
+      {
+        setSumBurger,
+        setIngredients,
+        setBurger,
+        setIngredient,
+        setDnone,
+        setTargetModal,
+        modalClose,
+        setOrder,
+        sendOrder,
+        sumBurger,        
+        ingredients,
+        burger,
+        ingredient,
+        dnone,
+        targetModal,
+        order
+      }
+    }>
       <AppHeader />
       <main>
         <div className={appStyle.container}>
-          <BurgerIngredients 
-          onClick={handleModalDetails} 
-          // ref={ingredientRef} 
-          ingredients={ingredients} />
-          <BurgerConstructor 
-          onClick={handleModalOrder} 
-          // ref={orderRef} 
-          ingredients={ingredients} />
+        { ingredients.length > 0 ? <BurgerIngredients 
+            onClick={handleModalDetails} /> : <></> }
+         
+          { ingredients.length > 0 ? <BurgerConstructor 
+            onClick={handleModalOrder} /> : <></> }
         </div>
       </main>
       <Modal 
-        // ref={overlayRef}
-        onClick={display}
-        dnone={dnone}
-        setDnone={setDnone}
-        targetModal={targetModal}
-        ingredientModal={ingredient}
-        modalClose={modalClose}
+        onClick={() => {display(false)}}
       >
-          <ModalWindowConstruct onClick={display}
-            dnone={dnone}
-            setDnone={setDnone}
-            targetModal={targetModal}
-            ingredientModal={ingredient}
-            modalClose={modalClose} />
+          <ModalWindowConstruct onClick={display} />
       </Modal>
-    </>
+    </IngredientsContext.Provider>
 
   );
 }

@@ -27,7 +27,7 @@ const GetProfileIcon = (props) => {
     )
 }
 
-const AppHeader = (props) => {
+const AppHeader = () => {
         return (
             <header className={`${headerStyles.header} pt-4 pb-4`}>
                 <div className={headerStyles.container}>
