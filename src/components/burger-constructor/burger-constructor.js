@@ -92,7 +92,7 @@ const Burger =  (props) => {
 
     React.useEffect(() => {
         calculating(burger)
-    }, [burger, burger.ingredients])
+    }, [burger])
 
     return (
         <> 
