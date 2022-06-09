@@ -76,8 +76,6 @@ const Burger =  (props) => {
                 })
             }
         });
-        console.log(burger);
-        console.log(order);
     }
     const calculating = () => {
         let sum = 0;
