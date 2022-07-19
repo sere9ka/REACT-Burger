@@ -1,11 +1,12 @@
 import { GET_DATA_SUCCESS, GET_DATA_REQUEST, GET_DATA_FAILED, SET_INGREDIENT, CLEAR_INGREDIENT, SET_BURGER_BUN, CLEAR_BURGER, SET_BURGER_INGREDIENTS } from "../actions/ingredients";
 import { SET_OPEN_MODAL, SET_CLOSE_MODAL, SET_TARGET_MODAL, CLEAR_TARGET_MODAL } from "../actions/modal";
-import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED, CLEAR_ORDER, SET_ORDER_INGREDIENTS, SET_ORDER_NUMBER } from "../actions/order";
+import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED, CLEAR_ORDER, SET_ORDER_INGREDIENTS } from "../actions/order";
 import { combineReducers } from 'redux';
 
 const initialState = {
     ingredientsAll: [],
     ingredientsRequest: false,
+    ingredientsFailed: false,
     dnone: false,
     targetModal: '',
     ingredient: {},
@@ -18,16 +19,17 @@ const initialState = {
         number: 0,
     },
     orderRequest: false,
+    orderFailed: false,
 }
 
 const orderReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_ORDER_REQUEST:
-            return {...state, orderRequest: true }
+            return {...state, orderRequest: true,  orderFailed: false }
         case GET_ORDER_SUCCESS:
-            return {...state, order: action.items }
+            return {...state, order: action.items, orderRequest: false }
         case GET_ORDER_FAILED:
-            return {...state, orderRequest: false }
+            return {...state, orderRequest: false, orderFailed: true }
         case CLEAR_ORDER: 
             return {...state, order: {}}
         case SET_ORDER_INGREDIENTS:
@@ -59,11 +61,11 @@ const modalReducer = (state = initialState, action) => {
 const ingredientsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_DATA_REQUEST:
-            return {...state, ingredientsRequest: true }
+            return {...state, ingredientsRequest: true, ingredientsFailed: false }
         case GET_DATA_SUCCESS:
-            return {...state, ingredientsAll: action.items, }
+            return {...state, ingredientsAll: action.items, ingredientsRequest: false }
         case GET_DATA_FAILED:
-            return {...state, ingredientsRequest: false, }
+            return {...state, ingredientsRequest: false, ingredientsFailed: true }
         case SET_INGREDIENT:
             return {...state, ingredient: action.ingredient, }
         case CLEAR_INGREDIENT:

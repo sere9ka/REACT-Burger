@@ -11,17 +11,17 @@ export function getOrder( dispatch, order, url ) {
     dispatch({
           type: GET_ORDER_REQUEST
         });
-        sendOrder(order, url).then(res => {
-          if (res && res.success) {
-            dispatch({
-              type: GET_ORDER_SUCCESS,
-              items: res.order
-            })
-          } else {
-            dispatch({
-              type: GET_ORDER_FAILED
-            })
-          }
+    sendOrder(order, url).then(res => {
+      if (res && res.success) {
+        dispatch({
+          type: GET_ORDER_SUCCESS,
+          items: res.order
         })
+      } else {
+        dispatch({
+          type: GET_ORDER_FAILED
+        })
+      }
+    })
 }
     
