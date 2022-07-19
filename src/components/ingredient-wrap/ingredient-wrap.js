@@ -3,8 +3,7 @@ import ingredientStyles from '../burger-ingredients/burger-ingredients.module.cs
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientsContext } from '../../Context/Context';
 import { TabContext } from '../../Context/TabContext';
-
-
+import { useSelector, useDispatch } from 'react-redux';
 
 const Ingredient = ({ingredient}) => {
     return (
@@ -26,11 +25,12 @@ const Ingredient = ({ingredient}) => {
 
 export const IngredientsWrap = (props) => {
     const { tabBunRef, tabMainRef, tabSauceRef } = useContext(TabContext)
-    const { ingredients } = useContext(IngredientsContext)
+    const { ingredientsAll } = useSelector(store => store.ingredients)
+    const dispatch = useDispatch()
 
-    const buns = ingredients.filter(item => item.type === 'bun')
-    const mains = ingredients.filter(item => item.type === 'main')
-    const sauces = ingredients.filter(item => item.type === 'sauce')
+    const buns = ingredientsAll.filter(item => item.type === 'bun')
+    const mains = ingredientsAll.filter(item => item.type === 'main')
+    const sauces = ingredientsAll.filter(item => item.type === 'sauce')
 
     return (
         <div className={`${ingredientStyles.listIngredients} mt-10`} id='listIngredients'>

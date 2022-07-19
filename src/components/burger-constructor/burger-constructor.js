@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import constructorStyles from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientsContext } from '../../Context/Context';
-
+import { useSelector, useDispatch } from 'react-redux';
 
 //вывод суммы стоимости ингредиентов
 const Summary = (props) => {
@@ -47,11 +47,14 @@ Bun.propTypes = {
 }
 //вывод ингредиентов
 const Burger =  (props) => {
-    const { order, setOrder, ingredients, burger, setBurger, setSumBurger, sumBurger } = useContext(IngredientsContext)
+    const { order, setOrder, burger, setBurger, setSumBurger, sumBurger } = useContext(IngredientsContext)
+
+    const { ingredientsAll } = useSelector(store => store.ingredients)
+    const dispatch = useDispatch()
 
     const getBurger = () => {     
 
-        ingredients.forEach((ingredient, i) => {
+        ingredientsAll.forEach((ingredient, i) => {
             if (ingredient.type === "bun" && i === 1) {
                 setBurger({
                     ...burger,
