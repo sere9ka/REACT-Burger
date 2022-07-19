@@ -3,7 +3,7 @@ import style from './modal.module.css'
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import { IngredientsContext } from '../../Context/Context';
+import { useSelector } from 'react-redux';
 
 
 // import ModalWindowConstruct from './modal-construct/modal-construct'
@@ -12,9 +12,8 @@ import ModalOverlay from './modal-overlay/modal-overlay'
 const modalRoot = document.getElementById("react-modals");
 
 const Modal = (props) => {
-    const {
-        dnone
-      } = useContext(IngredientsContext)
+    const { dnone } = useSelector(store => store.modal)
+
 
     React.useEffect(() => {
         const closeByEscape = (e) => {

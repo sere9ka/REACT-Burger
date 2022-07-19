@@ -4,17 +4,24 @@ import constructorStyles from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientsContext } from '../../Context/Context';
 import { useSelector, useDispatch } from 'react-redux';
+import { CLEAR_BURGER, SET_BURGER_BUN, SET_BURGER_INGREDIENTS } from '../../services/actions/ingredients';
+import { CLEAR_ORDER, SET_ORDER_INGREDIENTS } from '../../services/actions/order';
+import { getOrder } from '../../services/actions/order';
+import { baseUrl, urlOrder } from '../app/app';
 
 //вывод суммы стоимости ингредиентов
 const Summary = (props) => {
-    const { sendOrder, sumBurger } = useContext(IngredientsContext)
+    const { sumBurger } = useContext(IngredientsContext)
+    const { order } = useSelector(store => store.orders)
+    const dispatch = useDispatch()
+    const url = `${baseUrl}${urlOrder}`
 
     return (
         <div className={`${constructorStyles.summaryForm} mt-10`} id='summary_burger'>
             <p className={`${constructorStyles.finalyPrice}`}><span className={`mr-2 text text_type_digits-medium`}>{sumBurger}</span> <CurrencyIcon /></p>
             <div className='ml-10'>
                 <Button onClick={() => {
-                    sendOrder()
+                    getOrder(dispatch, order, url)
                     props.onClick()
                 }} type="primary" size="large">
                     Оформить заказ
@@ -27,8 +34,8 @@ Summary.propTypes = {
     onClick: PropTypes.func.isRequired
     
 }
-const Bun = ({bun, type}) => {
-    const { burger } = useContext(IngredientsContext)
+const Bun = ({ type }) => {
+    const { burger } = useSelector(store => store.ingredients)
     return (
         <div className={`${constructorStyles.card} mt-2 mb-2 mr-2`} id={`${(type === 'top') ? 'bunTop' : 'bunBottom'}`}>
             <ConstructorElement className={`${constructorStyles.card}`}
@@ -47,31 +54,37 @@ Bun.propTypes = {
 }
 //вывод ингредиентов
 const Burger =  (props) => {
-    const { order, setOrder, burger, setBurger, setSumBurger, sumBurger } = useContext(IngredientsContext)
+    const ingredients = []
+    const ingredientsId = []
+    const { setSumBurger, sumBurger } = useContext(IngredientsContext)
 
-    const { ingredientsAll } = useSelector(store => store.ingredients)
+    const { ingredientsAll, burger } = useSelector(store => store.ingredients)
     const dispatch = useDispatch()
 
     const getBurger = () => {     
-
         ingredientsAll.forEach((ingredient, i) => {
             if (ingredient.type === "bun" && i === 1) {
-                setBurger({
-                    ...burger,
-                    bun: ingredient, 
-                }) 
-                burger.ingredients.push(ingredient)
-                setOrder({
-                    ...order,
-                    burgerIngredients: [ingredient._id]
+                dispatch({
+                    type: SET_BURGER_BUN,
+                    bun: ingredient
                 })
-                
+                ingredients.push(ingredient)
+                ingredientsId.push([ingredient._id])
+                dispatch({
+                    type: SET_ORDER_INGREDIENTS,
+                    burgerIngredients: ingredientsId
+                })
             }
             if (ingredient.type !== "bun" && i % 2 === 0) {
-                burger.ingredients.push(ingredient)
-                setOrder({
-                    ...order,
-                    burgerIngredients: [ingredient._id]
+                ingredients.push(ingredient)
+                dispatch({
+                    type: SET_BURGER_INGREDIENTS,
+                    ingredients: ingredients,
+                })
+                ingredientsId.push([ingredient._id])
+                dispatch({
+                    type: SET_ORDER_INGREDIENTS,
+                    burgerIngredients: ingredientsId
                 })
             }
         });
@@ -83,12 +96,11 @@ const Burger =  (props) => {
     }
 
     React.useEffect(() => {
-        setBurger({
-            bun: undefined,
-            ingredients: null,
+        dispatch({
+            type: CLEAR_BURGER
         })
-        setOrder({
-            ingredients: [],
+        dispatch({
+            type: CLEAR_ORDER
         })
         getBurger();
     }, [])

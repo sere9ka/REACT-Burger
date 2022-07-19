@@ -1,11 +1,10 @@
-import { useContext } from 'react';
 import style from '../modal.module.css'
 import PropTypes from 'prop-types';
-import { IngredientsContext } from '../../../Context/Context';
+import { useSelector } from 'react-redux';
 
 
 const IngredientDetails = () => {
-    const { ingredient } = useContext(IngredientsContext)
+    const { ingredient } = useSelector(store => store.ingredients)
 
     if (typeof ingredient['name'] !== 'undefined') {
         return (

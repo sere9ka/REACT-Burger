@@ -1,12 +1,11 @@
-import { useContext } from 'react';
 import style from '../modal.module.css'
-import { IngredientsContext } from '../../../Context/Context';
 import IngredientDetails from '../modalIngredients/ingredient-details'
 import OrderDetails from '../modalOrder/order-details'
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 const ModalWindowConstruct = (props) => {
-    const { targetModal} = useContext(IngredientsContext)
+    const { targetModal } = useSelector(store => store.modal)
     
     if (targetModal === 'OrderDetails') {
         return (

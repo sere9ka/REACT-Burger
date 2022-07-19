@@ -1,11 +1,10 @@
 import style from '../modal.module.css'
-import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import orderImg from '../../../image/ok-order.svg'
-import { IngredientsContext } from '../../../Context/Context';
+import { useDispatch, useSelector } from 'react-redux';
 
 const OrderDetails = () => {
-    const { order } = useContext(IngredientsContext)
+    const { order } = useSelector(store => store.orders)
 
     return (
         <div className={`${style.modalOrder} ${style.modal}`}>
