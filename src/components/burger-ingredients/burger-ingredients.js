@@ -12,6 +12,32 @@ const ListIngredient = (props) => {
     const tabMainRef = useRef(null)
     const tabSauceRef = useRef(null)
 
+    const scrollingIngredients = (e) => {
+        const boxTop = e.target.getBoundingClientRect().y
+        const boxTabBunY = tabBunRef.current.getBoundingClientRect().y
+        const boxTabMainY = tabMainRef.current.getBoundingClientRect().y
+        const boxTabSauceY = tabSauceRef.current.getBoundingClientRect().y
+
+        const tabBunDiffY = boxTabBunY - boxTop
+        const tabMainDiffY = boxTabMainY - boxTop
+        const tabSauceDiffY = boxTabSauceY - boxTop
+
+        if ((tabBunDiffY * -1) < tabSauceDiffY) {
+            setCurrent('Булки')
+        } else if (tabSauceDiffY < tabMainDiffY 
+                    &&  tabSauceDiffY < 0 - (tabBunDiffY * -1)  
+                    || (tabSauceDiffY * -1) < tabMainDiffY
+                    ) {
+            setCurrent('Соусы')
+        } else if (tabMainDiffY > tabSauceDiffY) {
+            setCurrent('Начинки')
+        }
+
+        // console.log(tabBunDiffY)
+        // console.log(tabSauceDiffY)
+        // console.log(tabMainDiffY)
+    }
+
     return (
         <TabContext.Provider value={{
             tabBunRef,
@@ -19,7 +45,7 @@ const ListIngredient = (props) => {
             tabSauceRef,
         }}>
             <div className={`${ingredientStyles.flexbox}`}>
-                <Tab value="Булки"  to="bun" active={current === 'Булки'} onClick={() => {
+                <Tab value="Булки"  to="bun" active={current === 'Булки'} onClick={(e) => {
                     setCurrent()
                     tabBunRef.current.scrollIntoView({
                         behavior: "smooth",
@@ -47,7 +73,7 @@ const ListIngredient = (props) => {
                     Начинки
                 </Tab>
             </div>
-            <IngredientsWrap onClick={props.onClick}></IngredientsWrap>
+            <IngredientsWrap onScroll={scrollingIngredients} onClick={props.onClick}></IngredientsWrap>
         </TabContext.Provider>
    )
 }

@@ -28,19 +28,22 @@ export const IngredientsWrap = (props) => {
     const { ingredientsAll } = useSelector(store => store.ingredients)
     const dispatch = useDispatch()
 
-    const scrolling = (e) => {
-        console.dir(e.target);
-        console.log(e.target.clientHeight);
-    }
+
 
     const buns = ingredientsAll.filter(item => item.type === 'bun')
     const mains = ingredientsAll.filter(item => item.type === 'main')
     const sauces = ingredientsAll.filter(item => item.type === 'sauce')
 
     return (
-        <div  onScroll={scrolling} className={`${ingredientStyles.listIngredients} mt-10`} id='listIngredients'>
+        <div onScroll={props.onScroll} className={`${ingredientStyles.listIngredients} mt-10`} id='listIngredients'>
             <h3 ref={tabBunRef} className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Булки</h3>
             { buns.map(ingredient => (
+                <div data-key={ingredient._id} onClick={() => props.onClick(ingredient)} className={`${ingredientStyles.card} mb-10 mr-2`} key={ingredient._id}>
+                    <Ingredient ingredient={ingredient} />
+                </div>
+            ))}           
+            <h3 ref={tabSauceRef} className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Соусы</h3>
+            { sauces.map(ingredient => (
                 <div data-key={ingredient._id} onClick={() => props.onClick(ingredient)} className={`${ingredientStyles.card} mb-10 mr-2`} key={ingredient._id}>
                     <Ingredient ingredient={ingredient} />
                 </div>
@@ -53,12 +56,6 @@ export const IngredientsWrap = (props) => {
                 </div>
             ))}
 
-            <h3 ref={tabSauceRef} className={`text text_type_main-small mb-6 ${ingredientStyles.menuTitle}`}>Соусы</h3>
-            { sauces.map(ingredient => (
-                <div data-key={ingredient._id} onClick={() => props.onClick(ingredient)} className={`${ingredientStyles.card} mb-10 mr-2`} key={ingredient._id}>
-                    <Ingredient ingredient={ingredient} />
-                </div>
-            ))}
         </div>
     )
 }

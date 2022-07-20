@@ -7,7 +7,6 @@ import Modal from '../modal/modal';
 import ModalWindowConstruct from '../modal/modal-construct/modal-construct';
 import { IngredientsContext } from '../../Context/Context';
 import { useCalc } from '../../Hooks/useCalc';
-import { useOrder } from '../../Hooks/useOrder';
 import { CLEAR_INGREDIENT, getItems } from '../../services/actions/ingredients';
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_OPEN_MODAL, SET_CLOSE_MODAL, SET_TARGET_MODAL } from '../../services/actions/modal';
