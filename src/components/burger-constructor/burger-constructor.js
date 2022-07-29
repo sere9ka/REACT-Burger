@@ -4,10 +4,12 @@ import constructorStyles from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientsContext } from '../../Context/Context';
 import { useSelector, useDispatch } from 'react-redux';
-import { CLEAR_BURGER, SET_BURGER_BUN, SET_BURGER_INGREDIENTS } from '../../services/actions/ingredients';
+import { CLEAR_BURGER, SET_BURGER_BUN, SET_BURGER_INGREDIENTS, SET_INGREDIENTS_FOR_BURGER } from '../../services/actions/construcor';
 import { CLEAR_ORDER, SET_ORDER_INGREDIENTS } from '../../services/actions/order';
 import { getOrder } from '../../services/actions/order';
 import { baseUrl, urlOrder } from '../app/app';
+import { useDrop } from "react-dnd";
+import { Ingredient } from '../ingredient-wrap/ingredient-wrap';
 
 //вывод суммы стоимости ингредиентов
 const Summary = (props) => {
@@ -53,66 +55,80 @@ Bun.propTypes = {
     type: PropTypes.string.isRequired,  
 }
 //вывод ингредиентов
-const Burger =  (props) => {
-    const ingredients = []
+export const Burger =  ({ onClick }) => {
     const ingredientsId = []
-    const { setSumBurger, sumBurger } = useContext(IngredientsContext)
+    const { 
+        setSumBurger, 
+        sumBurger, 
+        draggedElements,
+        elements,
+        setElements,
+        setDraggedElements  
+    } = useContext(IngredientsContext)
 
-    const { ingredientsAll, burger } = useSelector(store => store.ingredients)
+    const { burger, ingredients } = useSelector(store => store.burgerConst)
+
     const dispatch = useDispatch()
 
-    const getBurger = () => {     
-        ingredientsAll.forEach((ingredient, i) => {
-            if (ingredient.type === "bun" && i === 1) {
-                dispatch({
-                    type: SET_BURGER_BUN,
-                    bun: ingredient
-                })
-                ingredients.push(ingredient)
-                ingredientsId.push([ingredient._id])
-                dispatch({
-                    type: SET_ORDER_INGREDIENTS,
-                    burgerIngredients: ingredientsId
-                })
-            }
-            if (ingredient.type !== "bun" && i % 2 === 0) {
-                ingredients.push(ingredient)
-                dispatch({
-                    type: SET_BURGER_INGREDIENTS,
-                    ingredients: ingredients,
-                })
-                ingredientsId.push([ingredient._id])
-                dispatch({
-                    type: SET_ORDER_INGREDIENTS,
-                    burgerIngredients: ingredientsId
-                })
-            }
-        });
-    }
-    const calculating = (burger) => {
-        burger.ingredients.forEach(ingredient => {
+    const handleDrop = (itemId) => {
+        // dispatch({
+        //     type: SET_INGREDIENTSALL,
+        //     items: [...ingredientsAll.filter(element => element !== itemId.id)]
+        // })
+        if (itemId.id.type === 'bun' && draggedElements.filter(item => item.type === 'bun').length === 0) {
+            dispatch({
+                type: SET_BURGER_BUN,
+                bun: itemId.id
+            })
+            dispatch({
+                type: SET_INGREDIENTS_FOR_BURGER,
+                ingredient: itemId.id
+            })
+        } else if (itemId.id.type !== 'bun') {
+            dispatch({
+                type: SET_INGREDIENTS_FOR_BURGER,
+                ingredient: itemId.id
+            })
+            dispatch({
+                type: SET_BURGER_INGREDIENTS,
+                ingredient: itemId.id
+            })
+        }
+        
+      }
+
+
+    const [{isHover}, dropTarget] = useDrop({
+        accept: "ingredient",
+        drop(itemId) {
+            handleDrop(itemId);
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        })
+    });
+
+    const borderColor = isHover ? 'green' : 'transparent';
+
+    const calculating = (draggedElements) => {
+        draggedElements.forEach(ingredient => {
             setSumBurger(sumBurger + ingredient.price)
         })
     }
 
     React.useEffect(() => {
-        dispatch({
-            type: CLEAR_BURGER
-        })
-        dispatch({
-            type: CLEAR_ORDER
-        })
-        getBurger();
-    }, [])
-
-    React.useEffect(() => {
-        calculating(burger)
-    }, [burger, burger.ingredients])
+        calculating(draggedElements)
+    }, [draggedElements])
 
     return (
-        <> 
-            <div className={`${constructorStyles.burger}`} id="constructor_ingredients">
-                { burger.bun !== null ? <Bun bun={burger.bun} type={'top'} /> : <></> }
+    <> 
+        <div 
+            ref={dropTarget} 
+            className={`${constructorStyles.burger}`} 
+            style={{borderColor}}
+            id="constructor_ingredients"
+        >
+            { burger.bun !== null ? <Bun bun={burger.bun} type={'top'} /> : <></> }
                 <div className={`${constructorStyles.ingredientsBurger}`}>
                     { burger.ingredients.filter(item => item.type !== 'bun').map((ingredient, i) => (
                         <div className={`${constructorStyles.cardIngr} mt-2 mb-2`} key={ingredient._id + i}>
@@ -128,10 +144,12 @@ const Burger =  (props) => {
                     ))}
                 </div>
                 { burger.bun !== null ? <Bun bun={burger.bun} type={'bottom'} /> : <></> }
-            </div>
-            
-        <Summary onClick={props.onClick} />
-        </>
+        </div>
+        
+        <Summary onClick={onClick} />
+                
+        
+    </>
     )
 }
 Burger.propTypes = {
@@ -141,12 +159,12 @@ Burger.propTypes = {
 const BurgerConstructor = (props) => {
     return (
         <section className={`${constructorStyles.section} pt-25`}>
-            <Burger onClick={props.onClick}/>
+            {props.children}
         </section>
     )
 }
 BurgerConstructor.propTypes = {
-    onClick: PropTypes.func.isRequired
+    // onClick: PropTypes.func.isRequired
 }
 
 

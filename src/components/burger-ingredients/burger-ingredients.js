@@ -32,10 +32,6 @@ const ListIngredient = (props) => {
         } else if (tabMainDiffY > tabSauceDiffY) {
             setCurrent('Начинки')
         }
-
-        // console.log(tabBunDiffY)
-        // console.log(tabSauceDiffY)
-        // console.log(tabMainDiffY)
     }
 
     return (

@@ -1,4 +1,5 @@
-import { GET_DATA_SUCCESS, GET_DATA_REQUEST, GET_DATA_FAILED, SET_INGREDIENT, CLEAR_INGREDIENT, SET_BURGER_BUN, CLEAR_BURGER, SET_BURGER_INGREDIENTS } from "../actions/ingredients";
+import { GET_DATA_SUCCESS, GET_DATA_REQUEST, GET_DATA_FAILED, SET_INGREDIENT, CLEAR_INGREDIENT,  SET_INGREDIENTSALL } from "../actions/ingredients";
+import { SET_BURGER_BUN, CLEAR_BURGER, SET_BURGER_INGREDIENTS, SET_INGREDIENTS_FOR_BURGER } from "../actions/construcor";
 import { SET_OPEN_MODAL, SET_CLOSE_MODAL, SET_TARGET_MODAL, CLEAR_TARGET_MODAL } from "../actions/modal";
 import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED, CLEAR_ORDER, SET_ORDER_INGREDIENTS } from "../actions/order";
 import { combineReducers } from 'redux';
@@ -10,6 +11,7 @@ const initialState = {
     dnone: false,
     targetModal: '',
     ingredient: {},
+    ingredientsConstructor: [],
     burger: {
         bun: null,
         ingredients: [],
@@ -58,6 +60,38 @@ const modalReducer = (state = initialState, action) => {
     }
 }
 
+const constructorReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case SET_BURGER_BUN:
+            return {...state, burger: {
+                    ...state.burger,
+                    bun: action.bun
+                }}
+        case SET_BURGER_INGREDIENTS:
+            return {...state, 
+                    burger: {
+                        ...state.burger,
+                        ingredients: action.ingredients
+                    }}
+        case CLEAR_BURGER:
+            return {...state, 
+                    burger: {
+                        bun: null,
+                        ingredients: [],
+                    }}
+        case SET_INGREDIENTS_FOR_BURGER:
+            return {
+                    ...state,
+                    ingredients: [
+                        ...state.ingredients,
+                        action.ingredient
+                    ]
+                    }
+        default:
+            return state;
+    }
+}
+
 const ingredientsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_DATA_REQUEST:
@@ -70,21 +104,11 @@ const ingredientsReducer = (state = initialState, action) => {
             return {...state, ingredient: action.ingredient, }
         case CLEAR_INGREDIENT:
             return {...state, ingredient: {}, }
-        case SET_BURGER_BUN:
-            return {...state, burger: {
-                    ...state.burger,
-                    bun: action.bun
-                }}
-        case SET_BURGER_INGREDIENTS:
-            return {...state, burger: {
-                    ...state.burger,
-                    ingredients: action.ingredients
-                }}
-        case CLEAR_BURGER:
-            return {...state, burger: {
-                bun: null,
-                ingredients: [],
-            }}
+        case SET_INGREDIENTSALL:
+            return {
+                ...state,
+                ingredientsAll: action.items
+            }
         default:
             return state;
     }
@@ -93,5 +117,6 @@ const ingredientsReducer = (state = initialState, action) => {
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
     modal: modalReducer,
-    orders: orderReducer
+    orders: orderReducer,
+    burgerConst: constructorReducer
 }) 
